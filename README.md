@@ -1,22 +1,23 @@
 # FrameFlow
 
-Distributed video processing platform with AI-powered summarization and asynchronous media pipelines.
+A distributed event-driven system for asynchronous video processing and AI-generated content summarization.
 
 ## Overview
 
 FrameFlow is a distributed backend platform designed to process video content asynchronously through scalable media pipelines.
 
-The project explores concepts such as:
+It focuses on exploring and applying real-world system design concepts such as:
 
-- Distributed systems
-- Asynchronous processing
-- Queue-based architectures
-- AI/LLM integration
-- Media processing pipelines
-- Microservices communication
-- Real-time updates with WebSockets
+Distributed systems design
+Asynchronous job processing
+Queue-based architectures
+Event-driven communication
+AI/LLM integration for content understanding
+Media processing pipelines
+Microservices communication patterns
+Real-time updates via WebSockets
 
-The main goal is to build a scalable architecture capable of receiving video uploads, extracting and processing frames, generating AI-powered summaries and delivering real-time processing updates to users.
+The system is designed to receive video uploads, process frames through background workers, generate AI-powered summaries, and deliver real-time status updates to clients.
 
 ---
 
@@ -25,22 +26,23 @@ The main goal is to build a scalable architecture capable of receiving video upl
 ```mermaid
 flowchart LR
 
-    Client --> BackendAPI
+    Client[Client / Frontend] -->|Upload Video| BackendAPI
 
-    BackendAPI --> PostgreSQL
-    BackendAPI --> BlobStorage
-    BackendAPI --> RedisQueue
+    BackendAPI -->|Create Job| PostgreSQL
+    BackendAPI -->|Store Video| BlobStorage
+    BackendAPI -->|Enqueue Job| RedisQueue
 
-    RedisQueue --> GoWorker
+    RedisQueue -->|Consume Job| WorkerGo
 
-    GoWorker --> MediaService
+    WorkerGo -->|Execute Task| MediaService
 
-    MediaService --> FrameExtraction
-    MediaService --> AIProcessing
+    MediaService -->|Extract Frames| FramePipeline
+    MediaService -->|AI Analysis| AIPipeline
 
-    MediaService --> BackendAPI
+    MediaService -->|Job Status Update| EventChannel
 
-    BackendAPI --> WebSocket
+    EventChannel --> BackendAPI
+    BackendAPI -->|Real-time Updates| WebSocket
     WebSocket --> Client
 ```
 
@@ -52,27 +54,24 @@ flowchart LR
 Responsible for:
 
 - Upload orchestration
-- Job creation
+- Job creation and lifecycle management
 - Metadata persistence
-- API endpoints
-- WebSocket updates
-- Communication with Redis queues
-
+- REST API endpoints
+- WebSocket real-time updates
+- Communication with the queue system
+  
 ### media-service
 Responsible for:
 
 - Video processing
 - Frame extraction
 - Media transformations
-- AI preprocessing pipeline
+- AI preprocessing and summarization pipeline
 
 ### worker-go
 Responsible for:
 
-- Queue consumption
-- Job orchestration
-- Distributed task execution
-- Pipeline coordination
+- High-performance queue consumer responsible for distributed job execution and background processing coordination.
 
 ---
 
@@ -136,28 +135,28 @@ frame-flow/
 ## Roadmap
 
 ### V1
-- [x] Dockerized distributed architecture
-- [x] Backend API service
-- [x] Media processing service
-- [x] Redis integration
-- [x] PostgreSQL integration
-- [ ] Video upload pipeline
-- [ ] Job persistence
-- [ ] Queue-based processing
-- [ ] Frame extraction
-- [ ] WebSocket real-time updates
+- Containerized distributed architecture
+- Backend API service
+- Media processing service
+- Redis-based queue system
+- PostgreSQL persistence layer
+- Video upload pipeline
+- Job lifecycle management
+- Asynchronous job processing pipeline
+- Frame extraction pipeline
+- Real-time job status streaming via WebSockets
 
 ---
 
 ## Goals
 
-This project was created to deepen knowledge in:
+This project was built to deepen understanding of:
 
 - Distributed systems
 - Backend architecture
 - Asynchronous workflows
-- AI engineering
-- Scalable media pipelines
+- AI-powered systems
+- Scalable media processing pipelines
 - Queue-driven systems
 - Microservices communication
 ---
