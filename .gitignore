@@ -1,16 +1,31 @@
 # Python
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
 
-# Virtual envs
+# Python virtual environments
 api-venv/
 media-venv/
+.venv/
+venv/
 
-# VSCode
-.vscode/
+# Python tooling
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
-# Environment
+# Go
+bin/
+*.exe
+*.test
+*.out
+
+# Environment variables
 .env
+.env.*
+
+# VSCode / Cursor
+.vscode/
 
 # Docker
 *.log
