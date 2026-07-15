@@ -58,7 +58,7 @@ Responsible for:
 - Metadata persistence
 - REST API endpoints
 - WebSocket real-time updates
-- Communication with the queue system
+- Publishing domain events to the Message Broker
   
 ### media-service
 Responsible for:
@@ -71,7 +71,9 @@ Responsible for:
 ### worker-go
 Responsible for:
 
-- High-performance queue consumer responsible for distributed job execution and background processing coordination.
+- Consuming domain events
+- Coordinating asynchronous workflows
+- Publishing follow-up events
 
 ---
 
@@ -138,7 +140,7 @@ frame-flow/
 - Containerized distributed architecture
 - Backend API service
 - Media processing service
-- Redis-based queue system
+- Message Broker abstraction
 - PostgreSQL persistence layer
 - Video upload pipeline
 - Job lifecycle management
